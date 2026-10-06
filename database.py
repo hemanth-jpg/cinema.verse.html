@@ -9,7 +9,10 @@ ROOT = Path(__file__).resolve().parent
 SQLITE_BACKUP = ROOT / "cinemaverse.db"
 MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://127.0.0.1:27017")
 MONGODB_DATABASE = os.environ.get("MONGODB_DATABASE", "cinemaverse")
-mongo_client = MongoClient(MONGODB_URI)
+if os.environ.get("VERCEL") == "1" and "MONGODB_URI" not in os.environ:
+    mongo_client = None
+else:
+    mongo_client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
 reviews_collection = None
 SEED_REVIEWS = [
     {
@@ -73,6 +76,8 @@ SEED_REVIEWS = [
 
 def initialize_database():
     global reviews_collection
+    if mongo_client is None:
+        raise RuntimeError("Set MONGODB_URI in the Vercel project environment variables.")
     reviews_collection = mongo_client[MONGODB_DATABASE]["reviews"]
     if reviews_collection.count_documents({}):
         return

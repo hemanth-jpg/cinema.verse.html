@@ -22,9 +22,13 @@ class handler(BaseHTTPRequestHandler):
             self.send_json(404, {"error": "Not found"})
             return
         try:
+            if mongo_client is None:
+                raise RuntimeError("Set MONGODB_URI in Vercel project Settings → Environment Variables.")
             mongo_client.admin.command("ping")
             initialize_database()
             self.send_json(200, get_reviews())
+        except RuntimeError as error:
+            self.send_json(503, {"error": str(error)})
         except PyMongoError as error:
             self.send_json(503, {"error": f"MongoDB is unavailable: {error}"})
 
@@ -38,11 +42,18 @@ class handler(BaseHTTPRequestHandler):
             return
         try:
             payload = json.loads(self.rfile.read(content_length))
+            if not isinstance(payload, dict):
+                raise ValueError("Review data must be an object")
+            if mongo_client is None:
+                raise RuntimeError("Set MONGODB_URI in Vercel project Settings → Environment Variables.")
             mongo_client.admin.command("ping")
             initialize_database()
             review_id = save_review(payload)
         except (ValueError, TypeError, json.JSONDecodeError) as error:
             self.send_json(400, {"error": str(error) or "Invalid review data"})
+            return
+        except RuntimeError as error:
+            self.send_json(503, {"error": str(error)})
             return
         except PyMongoError as error:
             self.send_json(503, {"error": f"MongoDB is unavailable: {error}"})
