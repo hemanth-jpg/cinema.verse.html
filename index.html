@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CinemaVerse — 2026 Movie Reviews</title>
+<title>CinemaVerse — South Indian Movie Reviews</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,7 +24,7 @@
     --red: #C0392B;
     --green: #2E8B57;
     --teal: #1A8FA0;
-    --tamil-orange: #F39C12;
+    --tamil-orange: #f39b0f;
     --action-red: #E74C3C;
     --chart-purple: #9B59B6;
   }
@@ -1071,6 +1071,30 @@
     .featured-film { height: auto; min-height: 400px; }
     .featured-content { position: static; transform: none; padding: 2rem; max-width: 100%; }
   }
+
+  .review-section { padding: 6rem 6%; background: var(--surface2); }
+  .review-section-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2rem; }
+  .review-layout { display: grid; grid-template-columns: minmax(250px, 0.72fr) minmax(0, 2fr); gap: 3rem; align-items: start; }
+  .review-form { display: grid; gap: 1rem; position: sticky; top: 96px; }
+  .review-form label { display: grid; gap: 0.4rem; color: var(--text-muted); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .review-form input, .review-form select, .review-form textarea {
+    width: 100%; padding: 0.8rem; border: 1px solid var(--border-soft); border-radius: 2px;
+    background: var(--deep); color: var(--text); font: 400 0.82rem 'DM Mono', monospace;
+  }
+  .review-form textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
+  .review-form input:focus, .review-form select:focus, .review-form textarea:focus { outline: 1px solid var(--gold); border-color: var(--gold); }
+  .review-form button { padding: 0.9rem 1rem; border: 0; background: var(--gold); color: var(--deep); font: 700 0.72rem 'Syne', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; }
+  .review-form button:disabled { opacity: 0.6; cursor: wait; }
+  .review-status { min-height: 1.4rem; color: var(--gold-light); font-size: 0.75rem; }
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2px; }
+  .review-poster { display: grid; place-items: center; background: linear-gradient(145deg, #164f56, #12251f 52%, #101114); }
+  .review-poster-title { max-width: 80%; color: rgba(242,237,228,0.82); font: italic 1.55rem/1.05 'Cormorant Garamond', serif; text-align: center; }
+  .review-empty { grid-column: 1 / -1; padding: 2rem; color: var(--text-muted); border: 1px solid var(--border-soft); }
+  @media (max-width: 800px) {
+    .review-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .review-form { position: static; }
+    .review-section-head { align-items: start; flex-direction: column; }
+  }
 </style>
 </head>
 <body>
@@ -1089,13 +1113,9 @@
   <a href="#home" class="nav-logo">CinemaVerse <span></span></a>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
-    <li><a href="#featured">Editor's Pick</a></li>
-    <li><a href="#movies">Hollywood</a></li>
-    <li><a href="#tamil">Tamil</a></li>
-    <li><a href="#action">Action</a></li>
-    <li><a href="#charts">Box Office</a></li>
+    <li><a href="#reviews">South Indian Reviews</a></li>
   </ul>
-  <div class="nav-year">2026 EDITION</div>
+  <div class="nav-year">SOUTH INDIA</div>
 </nav>
 
 <!-- HERO -->
@@ -1109,15 +1129,15 @@
     <div class="film-strip-hole"></div><div class="film-strip-hole"></div>
     <div class="film-strip-hole"></div><div class="film-strip-hole"></div>
   </div>
-  <p class="hero-eyebrow">&#9632;&nbsp; Now Reviewing · 2026 World Cinema</p>
+  <p class="hero-eyebrow">&#9632;&nbsp; South Indian Cinema · Reviews</p>
   <h1 class="hero-headline">Where <em>Cinema</em><br>Meets Critique</h1>
-  <p class="hero-sub">Curated reviews of 2026's finest — Hollywood blockbusters, Tamil masala spectacles, and Bollywood epics. Honest. Passionate. Uncompromising.</p>
+  <p class="hero-sub">Tamil, Telugu, Malayalam, and Kannada stories, reviewed with care. Explore the latest collection and add a film review of your own.</p>
   <div class="hero-cta">
     <a href="#movies" class="btn-primary">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
       Browse Films
     </a>
-    <a href="#charts" class="btn-outline">Box Office Charts</a>
+    <a href="#review-form" class="btn-outline">Add a Review</a>
   </div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
@@ -2072,26 +2092,23 @@
   <div class="footer-grid">
     <div>
       <div class="footer-brand">CinemaVerse</div>
-      <p class="footer-tagline">Honest, passionate film criticism covering Tamil cinema, Bollywood, and Hollywood. Built for cinema lovers everywhere.</p>
+      <p class="footer-tagline">Honest, passionate reviews across Tamil, Telugu, Malayalam, and Kannada cinema.</p>
     </div>
     <div>
       <p class="footer-col-title">Navigate</p>
       <ul class="footer-links">
         <li><a href="#home">Home</a></li>
-        <li><a href="#movies">Hollywood</a></li>
-        <li><a href="#tamil">Tamil</a></li>
-        <li><a href="#action">Action</a></li>
-        <li><a href="#charts">Box Office</a></li>
+        <li><a href="#reviews">South Indian Reviews</a></li>
+        <li><a href="#review-form">Add a Review</a></li>
       </ul>
     </div>
     <div>
-      <p class="footer-col-title">Genres</p>
+      <p class="footer-col-title">Languages</p>
       <ul class="footer-links">
-        <li><a href="#movies">Sci-Fi</a></li>
-        <li><a href="#movies">Horror</a></li>
-        <li><a href="#movies">Animation</a></li>
-        <li><a href="#tamil">Tamil Drama</a></li>
-        <li><a href="#action">Action / Thriller</a></li>
+        <li><a href="#reviews">Tamil</a></li>
+        <li><a href="#reviews">Telugu</a></li>
+        <li><a href="#reviews">Malayalam</a></li>
+        <li><a href="#reviews">Kannada</a></li>
       </ul>
     </div>
   </div>
@@ -2102,6 +2119,156 @@
 </footer>
 
 <script>
+  document.querySelectorAll('section.section-wrap, section.chart-section').forEach(section => section.remove());
+
+  const statsBar = document.querySelector('.stats-bar');
+  statsBar.innerHTML = `
+    <div class="stat-item"><span class="stat-num" id="review-count">0</span><span class="stat-label">Films Reviewed</span></div>
+    <div class="stat-item"><span class="stat-num" id="language-count">0</span><span class="stat-label">Languages</span></div>
+    <div class="stat-item"><span class="stat-num" id="average-rating">0.0</span><span class="stat-label">Average Rating / 5</span></div>
+  `;
+
+  const reviewSection = document.createElement('section');
+  reviewSection.className = 'review-section';
+  reviewSection.id = 'reviews';
+  reviewSection.innerHTML = `
+    <div class="review-section-head animate-in">
+      <div>
+        <p class="section-eyebrow"><span class="deco-line"></span>Across The South</p>
+        <h2 class="section-title">South Indian Reviews</h2>
+      </div>
+      <span class="section-count" id="review-total">Loading collection</span>
+    </div>
+    <div class="review-layout">
+      <form class="review-form" id="review-form">
+        <h3 class="card-title">Add a film review</h3>
+        <label>Movie name<input name="movie_name" maxlength="120" required autocomplete="off"></label>
+        <label>Language<select name="language" required>
+          <option value="Tamil">Tamil</option><option value="Telugu">Telugu</option>
+          <option value="Malayalam">Malayalam</option><option value="Kannada">Kannada</option>
+        </select></label>
+        <label>Release year<input name="year" type="number" min="1888" max="2100" value="2025" required></label>
+        <label>Your rating<select name="rating" required>
+          <option value="5">5.0 / 5</option><option value="4.5">4.5 / 5</option>
+          <option value="4">4.0 / 5</option><option value="3.5">3.5 / 5</option>
+          <option value="3">3.0 / 5</option><option value="2.5">2.5 / 5</option>
+          <option value="2">2.0 / 5</option><option value="1">1.0 / 5</option>
+        </select></label>
+        <label>Review<textarea name="review" maxlength="2000" required></textarea></label>
+        <button type="submit">Save Review</button>
+        <p class="review-status" id="review-status" aria-live="polite"></p>
+      </form>
+      <div class="review-grid" id="review-grid" aria-live="polite">
+        <p class="review-empty">Loading reviews from the database...</p>
+      </div>
+    </div>
+  `;
+  statsBar.after(reviewSection);
+
+  const reviewGrid = document.getElementById('review-grid');
+  const reviewForm = document.getElementById('review-form');
+  const reviewStatus = document.getElementById('review-status');
+  const posterColors = {
+    Tamil: 'linear-gradient(145deg, #8a3d23, #321b25 55%, #111114)',
+    Telugu: 'linear-gradient(145deg, #315783, #182433 55%, #111114)',
+    Malayalam: 'linear-gradient(145deg, #2b704d, #172b28 55%, #111114)',
+    Kannada: 'linear-gradient(145deg, #8b6522, #352b1b 55%, #111114)'
+  };
+
+  function makeElement(tagName, className, text) {
+    const element = document.createElement(tagName);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  }
+
+  function renderReviews(movies) {
+    reviewGrid.replaceChildren();
+    document.getElementById('review-total').textContent = `${movies.length} ${movies.length === 1 ? 'FILM' : 'FILMS'}`;
+    document.getElementById('review-count').textContent = movies.length;
+    const languages = new Set(movies.map(movie => movie.language));
+    document.getElementById('language-count').textContent = languages.size;
+    const average = movies.length ? movies.reduce((sum, movie) => sum + movie.rating, 0) / movies.length : 0;
+    document.getElementById('average-rating').textContent = average.toFixed(1);
+
+    const ticker = document.querySelector('.ticker-track');
+    ticker.replaceChildren();
+    [...movies, ...movies].forEach(movie => {
+      const item = makeElement('div', 'ticker-item', movie.movie_name);
+      item.append(makeElement('span', 'ticker-sep'));
+      ticker.append(item);
+    });
+
+    if (!movies.length) {
+      reviewGrid.append(makeElement('p', 'review-empty', 'No reviews yet. Add the first one.'));
+      return;
+    }
+
+    movies.forEach(movie => {
+      const card = makeElement('article', 'movie-card animate-in');
+      const poster = makeElement('div', 'movie-card-poster review-poster');
+      poster.style.background = posterColors[movie.language] || posterColors.Tamil;
+      poster.append(makeElement('span', 'review-poster-title', movie.movie_name));
+      const overlay = makeElement('div', 'poster-overlay');
+      poster.append(overlay);
+      const languageBadge = makeElement('div', 'card-genre-badge');
+      languageBadge.append(makeElement('div', 'badge badge-tamil', movie.language));
+      poster.append(languageBadge);
+      const rating = makeElement('div', 'card-rating');
+      rating.append(makeElement('span', 'card-rating-num', `★ ${Number(movie.rating).toFixed(1)}`));
+      poster.append(rating);
+
+      const body = makeElement('div', 'card-body');
+      body.append(makeElement('h3', 'card-title', movie.movie_name));
+      const metadata = makeElement('div', 'card-meta-row');
+      metadata.append(makeElement('span', 'card-meta', movie.language));
+      metadata.append(makeElement('span', 'card-meta', String(movie.year)));
+      body.append(metadata, makeElement('div', 'card-divider'), makeElement('p', 'card-review', `“${movie.review}”`));
+      card.append(poster, body);
+      reviewGrid.append(card);
+      observer.observe(card);
+    });
+  }
+
+  async function loadReviews() {
+    const response = await fetch('/api/movies');
+    if (!response.ok) throw new Error('Could not load reviews from the database.');
+    renderReviews(await response.json());
+  }
+
+  reviewForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const submitButton = reviewForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    reviewStatus.textContent = 'Saving review...';
+    const formData = new FormData(reviewForm);
+    const review = Object.fromEntries(formData.entries());
+    review.year = Number(review.year);
+    review.rating = Number(review.rating);
+    try {
+      const response = await fetch('/api/movies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(review)
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Could not save review.');
+      reviewForm.reset();
+      reviewForm.elements.year.value = new Date().getFullYear();
+      await loadReviews();
+      reviewStatus.textContent = 'Review saved to the database.';
+    } catch (error) {
+      reviewStatus.textContent = error.message;
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+
+  loadReviews().catch(error => {
+    document.getElementById('review-total').textContent = 'DATABASE OFFLINE';
+    reviewGrid.replaceChildren(makeElement('p', 'review-empty', `${error.message} Start the backend with python server.py.`));
+  });
+
   // Scroll animation
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {

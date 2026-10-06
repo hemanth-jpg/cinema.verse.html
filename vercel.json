@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/cinemaverse.html" }
+  ],
+  "functions": {
+    "api/movies.py": {
+      "maxDuration": 10
+    }
+  }
+}
