@@ -26,7 +26,7 @@ class CinemaVerseHandler(SimpleHTTPRequestHandler):
                 self.send_json(503, {"error": f"MongoDB is unavailable: {error}"})
             return
         if self.path == "/":
-            self.path = "/cinemaverse.html"
+            self.path = "/index.html"
         super().do_GET()
 
     def do_POST(self):
